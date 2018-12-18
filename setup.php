@@ -8,7 +8,7 @@ add_action( 'load-apis', function() {
 });
 
 // Add our option for setting the post types for the RSS feed
-add_action( 'admin_set_defaults', 'brg_rss_add_option' );
+add_action( 'admin_set_defaults', function() {
   if( !brg_rss_option_does_exist( RSS_OPTION ) ) {
     brg_rss_add_option( RSS_OPTION, json_encode( array( 'post' ) ) );
   }
