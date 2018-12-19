@@ -13,7 +13,7 @@ API_Register::get_instance()->add_endpoint(
 
 function brg_api_get_rss_feed( $data ) {
   // Get our default post types to return
-  $post_types = brg_rss_option_does_exist(RSS_OPTION);
+  $post_types = brg_rss_option_does_exist( 'rss_post_types' );
   if( !$post_types ) {
     $post_types = array( 'post' );
   }

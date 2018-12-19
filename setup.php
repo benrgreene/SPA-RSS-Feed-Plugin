@@ -1,6 +1,9 @@
 <?php
 
-define( 'RSS_OPTION', 'rss_post_types' );
+define( 'RSS_OPTION', array(
+  'rss_post_types'  => json_encode( array( 'post' ) ),
+  'rss_description' => 'description'
+) );
 
 // Add our RSS feed API endpoint
 add_action( 'load-apis', function() {
@@ -9,13 +12,15 @@ add_action( 'load-apis', function() {
 
 // Add our option for setting the post types for the RSS feed
 add_action( 'admin_set_defaults', function() {
-  if( !brg_rss_option_does_exist( RSS_OPTION ) ) {
-    brg_rss_add_option( RSS_OPTION, json_encode( array( 'post' ) ) );
+  foreach( RSS_OPTION as $key => $value) {
+    if( !brg_rss_option_does_exist( $key ) ) {
+      brg_rss_add_option( $key, $value );
+    } 
   }
 });
 
 // Want to check if an option exists in the database
-function brg_rss_option_does_exist( $option_name ) {
+function brg_rss_option_does_exist( $option_name ) { 
   $query = DB_Query_Builder::select_query( 'theme_options', array(
     'name' => $option_name
   ));
